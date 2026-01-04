@@ -1,0 +1,682 @@
+<html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Movie Player - Style Netflix/HBO Max</title>
+	<link rel="stylesheet" href="movie-player.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		/* Styles supplémentaires pour la page d'exemple */
+		.page-container {
+			max-width: 1400px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.page-header {
+			text-align: center;
+			margin-bottom: 40px;
+			padding: 20px;
+			background: linear-gradient(135deg, #e50914 0%, #5d0d74 100%);
+			border-radius: 16px;
+			color: white;
+		}
+
+		.page-header h1 {
+			font-size: 2.5rem;
+			margin-bottom: 10px;
+			font-weight: 800;
+		}
+
+		.page-header p {
+			opacity: 0.9;
+			font-size: 1.1rem;
+		}
+
+		.controls-section {
+			background: rgba(255, 255, 255, 0.05);
+			padding: 20px;
+			border-radius: 12px;
+			margin-bottom: 30px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.theme-switcher {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		.theme-btn {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 8px;
+			background: var(--netflix-gray);
+			color: var(--netflix-text);
+			cursor: pointer;
+			font-weight: 600;
+			transition: all 0.3s ease;
+		}
+
+		.theme-btn.active {
+			background: var(--netflix-red);
+			color: white;
+		}
+
+		.movies-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			gap: 24px;
+			margin-bottom: 40px;
+		}
+
+		.movie-card {
+			background: var(--netflix-dark-gray);
+			border-radius: 12px;
+			overflow: hidden;
+			transition: all 0.3s ease;
+			cursor: pointer;
+			position: relative;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.movie-card:hover {
+			transform: translateY(-8px) scale(1.02);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+			border-color: var(--netflix-red);
+		}
+
+		.movie-card-image {
+			height: 400px;
+			background-size: cover;
+			background-position: center;
+			position: relative;
+		}
+
+		.movie-card-overlay {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 50%);
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			display: flex;
+			align-items: flex-end;
+			padding: 20px;
+		}
+
+		.movie-card:hover .movie-card-overlay {
+			opacity: 1;
+		}
+
+		.play-btn {
+			background: var(--netflix-red);
+			color: white;
+			border: none;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			font-size: 1.2rem;
+			transition: all 0.3s ease;
+		}
+
+		.play-btn:hover {
+			background: var(--netflix-dark-red);
+			transform: scale(1.1);
+		}
+
+		.movie-card-content {
+			padding: 20px;
+		}
+
+		.movie-card-title {
+			font-size: 1.2rem;
+			font-weight: 700;
+			margin-bottom: 8px;
+			color: var(--netflix-text);
+		}
+
+		.movie-card-meta {
+			display: flex;
+			gap: 12px;
+			color: var(--netflix-text-secondary);
+			font-size: 0.9rem;
+			margin-bottom: 12px;
+		}
+
+		.movie-card-description {
+			color: var(--netflix-text-secondary);
+			font-size: 0.9rem;
+			line-height: 1.4;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+
+		.movie-card-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin-top: 12px;
+		}
+
+		.movie-card-tag {
+			background: rgba(229, 9, 20, 0.15);
+			color: var(--netflix-red);
+			padding: 4px 10px;
+			border-radius: 20px;
+			font-size: 0.8rem;
+			font-weight: 500;
+		}
+
+		.category-section {
+			margin-bottom: 40px;
+		}
+
+		.category-title {
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin-bottom: 20px;
+			color: var(--netflix-text);
+			padding-left: 10px;
+			border-left: 4px solid var(--netflix-red);
+		}
+
+		.info-panel {
+			background: rgba(255, 255, 255, 0.05);
+			padding: 25px;
+			border-radius: 12px;
+			margin-top: 40px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.info-panel h3 {
+			color: var(--netflix-red);
+			margin-bottom: 15px;
+			font-size: 1.3rem;
+		}
+
+		.info-panel code {
+			background: rgba(255, 255, 255, 0.1);
+			padding: 2px 6px;
+			border-radius: 4px;
+			font-family: monospace;
+		}
+	</style>
+</head>
+
+<body class="dark-mode">
+	<div class="page-container">
+		<!-- En-tête de la page -->
+		<header class="page-header">
+			<svg width="320" height="5" viewBox="0 0 320 70" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<rect width="320" height="70" fill="url(#pattern0_64_13)" />
+				<defs>
+					<pattern id="pattern0_64_13" patternContentUnits="objectBoundingBox" width="1" height="1">
+						<use xlink:href="#image0_64_13" transform="scale(0.000484496 0.00221484)" />
+					</pattern>
+
+					<h1><i class="fas fa-film"></i> Movie Player Premium</h1>
+					<p>Le fichier CSV est dans le repertoire ../csv/movie.csv</p>
+		</header>
+
+		<!-- Contrôles du thème -->
+		<section class="controls-section">
+			<div class="theme-switcher">
+				<span style="font-weight: 600;">Thème:</span>
+				<button class="theme-btn active" onclick="setTheme('dark')">
+					<i class="fas fa-moon"></i> Mode Sombre
+				</button>
+				<button class="theme-btn" onclick="setTheme('light')">
+					<i class="fas fa-sun"></i> Mode Clair
+				</button>
+			</div>
+			<!-- Ajouter cette section après la section des contrôles -->
+			<section class="controls-section" id="csv-section">
+				<div class="theme-switcher">
+					<span style="font-weight: 600;">Source de données:</span>
+					<button class="theme-btn active" onclick="loadSampleData()">
+						<i class="fas fa-film"></i> Données de démonstration
+					</button>
+					<button class="theme-btn" onclick="document.getElementById('csv-file').click()">
+						<i class="fas fa-file-csv"></i> Charger CSV
+					</button>
+				</div>
+
+				<div style="color: var(--netflix-text-secondary); font-size: 0.95rem; margin-top: 10px;">
+					<p><i class="fas fa-database"></i> <span id="content-count">0</span> films et séries disponibles</p>
+				</div>
+			</section>
+			<div style="color: var(--netflix-text-secondary); font-size: 0.95rem;">
+				<p><i class="fas fa-info-circle"></i> Cliquez sur n'importe quelle carte pour ouvrir le lecteur</p>
+			</div>
+		</section>
+
+		<!-- Films populaires -->
+		<section class="category-section">
+			<h2 class="category-title"><i class="fas fa-fire"></i> Films Populaires</h2>
+			<div class="movies-grid" id="popular-movies">
+				<!-- Les films seront ajoutés dynamiquement -->
+			</div>
+		</section>
+
+		<!-- Séries TV -->
+		<section class="category-section">
+			<h2 class="category-title"><i class="fas fa-tv"></i> Séries TV</h2>
+			<div class="movies-grid" id="series-grid">
+				<!-- Les séries seront ajoutés dynamiquement -->
+			</div>
+		</section>
+
+		<!-- Films d'action -->
+		<section class="category-section">
+			<h2 class="category-title"><i class="fas fa-explosion"></i> Films d'Action</h2>
+			<div class="movies-grid" id="action-movies">
+				<!-- Les films d'action seront ajoutés dynamiquement -->
+			</div>
+
+		</section>
+
+		<!-- Panel d'information -->
+		<section class="info-panel">
+			<h3><i class="fas fa-code"></i> Comment utiliser</h3>
+			<p style="margin-bottom: 10px; color: var(--netflix-text-secondary);">
+				Pour ouvrir le lecteur depuis votre code JavaScript, utilisez:
+			</p>
+			<code style="display: block; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px; color: var(--netflix-text);">
+				window.openMoviePlayer(movieData);
+			</code>
+			<p style="color: var(--netflix-text-secondary);">
+				Où <code>movieData</code> est un objet contenant les informations du film (voir la console du navigateur pour les exemples).
+			</p>
+		</section>
+	</div>
+
+	<!-- Movie Player Container -->
+	<div id="movie-player-container" class="hidden"></div>
+
+	<script src="movie-player.js"></script>
+
+	<script>
+		// Données de démonstration
+		const demoMovies = {
+			// Films populaires
+			popular: [{
+					id: '1',
+					title: 'Dune : Deuxième Partie',
+					year: 2024,
+					category: 'Science-Fiction',
+					duration: '2h46m',
+					rating: '8.7',
+					description: 'Paul Atreides s\'unit à Chani et aux Fremen pour mener la révolte contre ceux qui ont anéanti sa famille. Hanté par de sombres prémonitions, il doit choisir entre l\'amour de sa vie et le destin de l\'univers.',
+					tags: ['Science-Fiction', 'Épique', 'Aventure'],
+					cover_image: 'https://image.tmdb.org/t/p/original/8b8R8l88Qje9dn9OE8PY05Nx1S8.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/U2Qp5pL3ovA',
+					is_favorite: true,
+					episodes: []
+				},
+				{
+					id: '2',
+					title: 'Oppenheimer',
+					year: 2023,
+					category: 'Biopic',
+					duration: '3h00m',
+					rating: '8.3',
+					description: 'L\'histoire du physicien J. Robert Oppenheimer, père de la bombe atomique, et du dilemme moral qui le hanta après les bombardements d\'Hiroshima et de Nagasaki.',
+					tags: ['Historique', 'Biopic', 'Drame'],
+					cover_image: 'https://image.tmdb.org/t/p/original/8Gxv8gSFCU0XGDykEGv7zR1n8ua.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/uYPbbksJxIg',
+					is_favorite: false,
+					episodes: []
+				},
+				{
+					id: '3',
+					title: 'Spider-Man: Across the Spider-Verse',
+					year: 2023,
+					category: 'Animation',
+					duration: '2h20m',
+					rating: '8.7',
+					description: 'Miles Morales se lance à travers le Multivers et rencontre une équipe de Spider-People chargée de protéger son existence.',
+					tags: ['Animation', 'Super-héros', 'Aventure'],
+					cover_image: 'https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/shW9i6k8cB0',
+					is_favorite: true,
+					episodes: []
+				},
+				{
+					id: '4',
+					title: 'The Batman',
+					year: 2022,
+					category: 'Action',
+					duration: '2h56m',
+					rating: '7.8',
+					description: 'Deux ans à patrouiller dans les rues en tant que Batman, instillant la peur chez les criminels, ont conduit Bruce Wayne dans les profondeurs les plus sombres de Gotham.',
+					tags: ['Super-héros', 'Noir', 'Thriller'],
+					cover_image: 'https://image.tmdb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/mqqft2x_Aa4',
+					is_favorite: false,
+					episodes: []
+				}
+			],
+			// Séries TV
+			series: [{
+					id: '5',
+					title: 'Stranger Things',
+					year: 2016,
+					category: 'Science-Fiction',
+					duration: '50m par épisode',
+					rating: '8.7',
+					description: 'À Hawkins, en 1983, dans l\'Indiana. Lorsque Will Byers disparaît, ses amis se lancent dans une recherche semée d\'embûches pour le retrouver.',
+					tags: ['Science-Fiction', 'Horreur', 'Drame'],
+					cover_image: 'https://image.tmdb.org/t/p/original/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
+					content_type: 'series',
+					iframe_url: 'https://www.youtube.com/embed/b9EkMc79ZSU',
+					is_favorite: true,
+					episodes: [{
+							name: 'Chapitre 1 : La Disparition de Will Byers',
+							url: 'https://www.youtube.com/embed/b9EkMc79ZSU',
+							description: 'Un jeune garçon disparaît mystérieusement dans une petite ville.'
+						},
+						{
+							name: 'Chapitre 2 : La Folie de Maple Street',
+							url: 'https://www.youtube.com/embed/XWxyRG_tckY',
+							description: 'Lucas, Mike et Dustin tentent de parler à la fille qu\'ils ont trouvée.'
+						},
+						{
+							name: 'Chapitre 3 : Petite lumière',
+							url: 'https://www.youtube.com/embed/YEG3bmU_WaI',
+							description: 'Une mère désespérée appelle à l\'aide, et Eleven pense à s\'échapper.'
+						},
+						{
+							name: 'Chapitre 4 : Le Corps',
+							url: 'https://www.youtube.com/embed/6HZ3KmiPv9Q',
+							description: 'Les garçons se cachent de ceux qui les recherchent, et Jonathan découvre une vérité étrange.'
+						}
+					]
+				},
+				{
+					id: '6',
+					title: 'The Last of Us',
+					year: 2023,
+					category: 'Drame',
+					duration: '60m par épisode',
+					rating: '8.8',
+					description: 'Vingt ans après la destruction de la civilisation moderne, Joel, un survivant endurci, est engagé pour faire sortir Ellie, 14 ans, d\'une zone de quarantaine oppressive.',
+					tags: ['Drame', 'Post-apocalyptique', 'Horreur'],
+					cover_image: 'https://image.tmdb.org/t/p/original/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg',
+					content_type: 'series',
+					iframe_url: 'https://www.youtube.com/embed/uLtkt8BonwM',
+					is_favorite: true,
+					episodes: [{
+							name: 'Épisode 1 : Quand on a perdu la partie',
+							url: 'https://www.youtube.com/embed/uLtkt8BonwM',
+							description: 'Une épidémie dévaste la population mondiale et bouleverse la vie de Joel.'
+						},
+						{
+							name: 'Épisode 2 : Infecté',
+							url: 'https://www.youtube.com/embed/2VjS0aHrIuE',
+							description: 'Joel et Tess font équipe avec une fille mystérieuse pour quitter la ville.'
+						},
+						{
+							name: 'Épisode 3 : Long, Long Time',
+							url: 'https://www.youtube.com/embed/0n5xED3tJjs',
+							description: 'Joel et Ellie se rendent chez Bill et Frank pour trouver une voiture.'
+						},
+						{
+							name: 'Épisode 4 : Veuillez me tenir la main',
+							url: 'https://www.youtube.com/embed/kJbW4kEc1MY',
+							description: 'Joel et Ellie traversent Kansas City et rencontrent des survivants.'
+						}
+					]
+				},
+				{
+					id: '7',
+					title: 'The Crown',
+					year: 2016,
+					category: 'Drame',
+					duration: '55m par épisode',
+					rating: '8.6',
+					description: 'Suivez les rivalités politiques et les intrigues amoureuses du règne de la reine Elizabeth II.',
+					tags: ['Historique', 'Drame', 'Biopic'],
+					cover_image: 'https://image.tmdb.org/t/p/original/1M876KPjulVwppEpldhdc8V4o12.jpg',
+					content_type: 'series',
+					iframe_url: 'https://www.youtube.com/embed/JWtnJjn6ng0',
+					is_favorite: false,
+					episodes: [{
+							name: 'S01E01 : Wolferton Splash',
+							url: 'https://www.youtube.com/embed/JWtnJjn6ng0',
+							description: 'Le roi George VI meurt, laissant sa fille Elizabeth assumer le trône.'
+						},
+						{
+							name: 'S01E02 : Hyde Park Corner',
+							url: 'https://www.youtube.com/embed/example1',
+							description: 'La reine Elizabeth retourne à Londres après la mort de son père.'
+						},
+						{
+							name: 'S01E03 : Windsor',
+							url: 'https://www.youtube.com/embed/example2',
+							description: 'La reine s\'installe dans son nouveau rôle et ses nouvelles responsabilités.'
+						}
+					]
+				}
+			],
+			// Films d'action
+			action: [{
+					id: '8',
+					title: 'John Wick 4',
+					year: 2023,
+					category: 'Action',
+					duration: '2h49m',
+					rating: '7.8',
+					description: 'John Wick découvre un moyen de vaincre le Haut Conseil. Mais avant de pouvoir gagner sa liberté, il doit affronter un nouvel ennemi aux alliances puissantes.',
+					tags: ['Action', 'Thriller', 'Néo-noir'],
+					cover_image: 'https://image.tmdb.org/t/p/original/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/yjRHZEUamCc',
+					is_favorite: true,
+					episodes: []
+				},
+				{
+					id: '9',
+					title: 'Mission: Impossible - Dead Reckoning Part One',
+					year: 2023,
+					category: 'Action',
+					duration: '2h43m',
+					rating: '7.8',
+					description: 'Ethan Hunt et son équipe de l\'IMF doivent retrouver une nouvelle arme terrifiante qui menace l\'humanité entière.',
+					tags: ['Action', 'Espionnage', 'Aventure'],
+					cover_image: 'https://image.tmdb.org/t/p/original/NNxYkU70HPurnNCSiCjYAmacwm.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/avz06PDqDbM',
+					is_favorite: false,
+					episodes: []
+				},
+				{
+					id: '10',
+					title: 'Top Gun: Maverick',
+					year: 2022,
+					category: 'Action',
+					duration: '2h10m',
+					rating: '8.2',
+					description: 'Après plus de trente ans de service, Pete "Maverick" Mitchell est toujours là, repoussant les limites en tant que pilote d\'essai courageux.',
+					tags: ['Action', 'Drame', 'Aventure'],
+					cover_image: 'https://image.tmdb.org/t/p/original/62HCnUTziyWcpDaBO2i1DX17ljH.jpg',
+					content_type: 'movie',
+					iframe_url: 'https://www.youtube.com/embed/giXco2jaZ_4',
+					is_favorite: true,
+					episodes: []
+				}
+			]
+		};
+		// Tous les films pour le lecteur
+		const allMovies = [
+			...demoMovies.popular,
+			...demoMovies.series,
+			...demoMovies.action
+		];
+		// Initialisation
+		document.addEventListener('DOMContentLoaded', function() {
+			// Initialiser le movie player
+			moviePlayer = new MoviePlayer({
+				darkMode: true,
+				allMovies: allMovies,
+				onClose: () => console.log('Player fermé'),
+				onPlayMovie: (movie) => {
+					console.log('Lecture du film:', movie.title);
+					moviePlayer.show(movie);
+				},
+				onToggleFavorite: (id, isFavorite) => {
+					console.log(`Favori ${id}: ${isFavorite ? 'ajouté' : 'retiré'}`);
+					// Mettre à jour l'état dans les données
+					const movie = allMovies.find(m => m.id === id);
+					if (movie) {
+						movie.is_favorite = isFavorite;
+					}
+				}
+			});
+			// Rendre les films disponibles globalement
+			window.demoMovies = demoMovies;
+			window.allMovies = allMovies;
+			// Afficher les films dans la grille
+			renderMovies();
+			// Exporter la fonction pour ouvrir le lecteur
+			window.openMoviePlayer = (movieData) => {
+				if (moviePlayer) {
+					moviePlayer.show(movieData);
+				}
+			};
+		});
+		// Fonction pour afficher les films
+		function renderMovies() {
+			// Films populaires
+			const popularGrid = document.getElementById('popular-movies');
+			demoMovies.popular.forEach(movie => {
+				popularGrid.innerHTML += createMovieCard(movie);
+			});
+			// Séries TV
+			const seriesGrid = document.getElementById('series-grid');
+			demoMovies.series.forEach(movie => {
+				seriesGrid.innerHTML += createMovieCard(movie);
+			});
+			// Films d'action
+			const actionGrid = document.getElementById('action-movies');
+			demoMovies.action.forEach(movie => {
+				actionGrid.innerHTML += createMovieCard(movie);
+			});
+			// Ajouter les écouteurs d'événements après le rendu
+			setTimeout(() => {
+				document.querySelectorAll('.movie-card').forEach(card => {
+					card.addEventListener('click', function() {
+						const movieId = this.getAttribute('data-movie-id');
+						const movie = allMovies.find(m => m.id === movieId);
+						if (movie) {
+							window.openMoviePlayer(movie);
+						}
+					});
+				});
+			}, 100);
+		}
+		// Créer une carte de film
+		function createMovieCard(movie) {
+			return `
+                <div class="movie-card" data-movie-id="${movie.id}">
+                    <div class="movie-card-image" style="background-image: url('${movie.cover_image}')">
+                        <div class="movie-card-overlay">
+                            <button class="play-btn" onclick="event.stopPropagation(); window.openMoviePlayer(${JSON.stringify(movie).replace(/"/g, '&quot;')})">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="movie-card-content">
+                        <h3 class="movie-card-title">${movie.title}</h3>
+                        <div class="movie-card-meta">
+                            <span><i class="fas fa-calendar"></i> ${movie.year}</span>
+                            <span><i class="fas ${movie.content_type === 'series' ? 'fa-tv' : 'fa-film'}"></i> ${movie.content_type === 'series' ? 'Série' : 'Film'}</span>
+                            <span><i class="fas fa-star"></i> ${movie.rating}</span>
+                        </div>
+                        <p class="movie-card-description">${movie.description}</p>
+                        <div class="movie-card-tags">
+                            ${movie.tags.slice(0, 2).map(tag => `
+                                <span class="movie-card-tag">${tag}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+		}
+		// Changer le thème
+		function setTheme(theme) {
+			const darkBtn = document.querySelector('.theme-btn:nth-child(2)');
+			const lightBtn = document.querySelector('.theme-btn:nth-child(3)');
+			if (theme === 'dark') {
+				document.body.className = 'dark-mode';
+				darkBtn.classList.add('active');
+				lightBtn.classList.remove('active');
+				if (moviePlayer) moviePlayer.updateTheme(true);
+			} else {
+				document.body.className = 'light-mode';
+				darkBtn.classList.remove('active');
+				lightBtn.classList.add('active');
+				if (moviePlayer) moviePlayer.updateTheme(false);
+			}
+		}
+		// Fonctions de démonstration pour la console
+		window.demoFunctions = {
+			// Ouvrir un film spécifique
+			openMovie: function(movieId) {
+				const movie = allMovies.find(m => m.id === movieId);
+				if (movie) {
+					window.openMoviePlayer(movie);
+				}
+			},
+			// Ouvrir le premier film
+			openFirstMovie: function() {
+				if (allMovies.length > 0) {
+					window.openMoviePlayer(allMovies[0]);
+				}
+			},
+			// Ouvrir la première série
+			openFirstSeries: function() {
+				const series = demoMovies.series[0];
+				if (series) {
+					window.openMoviePlayer(series);
+				}
+			},
+			// Afficher toutes les données
+			showAllMovies: function() {
+				console.log('Tous les films disponibles:', allMovies);
+				return allMovies;
+			},
+			// Tester l'autoplay
+			testAutoplay: function() {
+				const series = demoMovies.series[0];
+				if (series) {
+					window.openMoviePlayer(series);
+					console.log('Série ouverte avec autoplay. Le prochain épisode commencera dans 5 secondes.');
+				}
+			}
+		};
+		// Afficher les commandes utiles dans la console
+		console.log('%c🎬 Movie Player Demo', 'color: #e50914; font-size: 20px; font-weight: bold;');
+		console.log('%cCommandes disponibles:', 'color: #00a8e1; font-weight: bold;');
+		console.log('• demoFunctions.openMovie("1") - Ouvrir Dune');
+		console.log('• demoFunctions.openFirstMovie() - Ouvrir le premier film');
+		console.log('• demoFunctions.openFirstSeries() - Ouvrir la première série');
+		console.log('• demoFunctions.testAutoplay() - Tester l\'autoplay');
+		console.log('• demoFunctions.showAllMovies() - Voir toutes les données');
+		console.log('• window.openMoviePlayer(movieData) - Ouvrir un film personnalisé');
+	</script>
+</body>
+
+</html>

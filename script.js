@@ -1468,3 +1468,440 @@ Loki Saison 2,"La nouvelle série Disney+ Original des studios Marvel...",,https
 
 // Charger automatiquement les données d'exemple au démarrage
 setTimeout(loadSampleCSVData, 1000);
+
+// Données de démonstration
+const demoMovies = {
+	// Films populaires
+	popular: [
+		{
+			id: "1",
+			title: "Dune : Deuxième Partie",
+			year: 2024,
+			category: "Science-Fiction",
+			duration: "2h46m",
+			rating: "8.7",
+			description:
+				"Paul Atreides s'unit à Chani et aux Fremen pour mener la révolte contre ceux qui ont anéanti sa famille. Hanté par de sombres prémonitions, il doit choisir entre l'amour de sa vie et le destin de l'univers.",
+			tags: ["Science-Fiction", "Épique", "Aventure"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/8b8R8l88Qje9dn9OE8PY05Nx1S8.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/U2Qp5pL3ovA",
+			is_favorite: true,
+			episodes: []
+		},
+		{
+			id: "2",
+			title: "Oppenheimer",
+			year: 2023,
+			category: "Biopic",
+			duration: "3h00m",
+			rating: "8.3",
+			description:
+				"L'histoire du physicien J. Robert Oppenheimer, père de la bombe atomique, et du dilemme moral qui le hanta après les bombardements d'Hiroshima et de Nagasaki.",
+			tags: ["Historique", "Biopic", "Drame"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/8Gxv8gSFCU0XGDykEGv7zR1n8ua.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/uYPbbksJxIg",
+			is_favorite: false,
+			episodes: []
+		},
+		{
+			id: "3",
+			title: "Spider-Man: Across the Spider-Verse",
+			year: 2023,
+			category: "Animation",
+			duration: "2h20m",
+			rating: "8.7",
+			description:
+				"Miles Morales se lance à travers le Multivers et rencontre une équipe de Spider-People chargée de protéger son existence.",
+			tags: ["Animation", "Super-héros", "Aventure"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/shW9i6k8cB0",
+			is_favorite: true,
+			episodes: []
+		},
+		{
+			id: "4",
+			title: "The Batman",
+			year: 2022,
+			category: "Action",
+			duration: "2h56m",
+			rating: "7.8",
+			description:
+				"Deux ans à patrouiller dans les rues en tant que Batman, instillant la peur chez les criminels, ont conduit Bruce Wayne dans les profondeurs les plus sombres de Gotham.",
+			tags: ["Super-héros", "Noir", "Thriller"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/mqqft2x_Aa4",
+			is_favorite: false,
+			episodes: []
+		}
+	],
+	// Séries TV
+	series: [
+		{
+			id: "5",
+			title: "Stranger Things",
+			year: 2016,
+			category: "Science-Fiction",
+			duration: "50m par épisode",
+			rating: "8.7",
+			description:
+				"À Hawkins, en 1983, dans l'Indiana. Lorsque Will Byers disparaît, ses amis se lancent dans une recherche semée d'embûches pour le retrouver.",
+			tags: ["Science-Fiction", "Horreur", "Drame"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+			content_type: "series",
+			iframe_url: "https://www.youtube.com/embed/b9EkMc79ZSU",
+			is_favorite: true,
+			episodes: [
+				{
+					name: "Chapitre 1 : La Disparition de Will Byers",
+					url: "https://www.youtube.com/embed/b9EkMc79ZSU",
+					description:
+						"Un jeune garçon disparaît mystérieusement dans une petite ville."
+				},
+				{
+					name: "Chapitre 2 : La Folie de Maple Street",
+					url: "https://www.youtube.com/embed/XWxyRG_tckY",
+					description:
+						"Lucas, Mike et Dustin tentent de parler à la fille qu'ils ont trouvée."
+				},
+				{
+					name: "Chapitre 3 : Petite lumière",
+					url: "https://www.youtube.com/embed/YEG3bmU_WaI",
+					description:
+						"Une mère désespérée appelle à l'aide, et Eleven pense à s'échapper."
+				},
+				{
+					name: "Chapitre 4 : Le Corps",
+					url: "https://www.youtube.com/embed/6HZ3KmiPv9Q",
+					description:
+						"Les garçons se cachent de ceux qui les recherchent, et Jonathan découvre une vérité étrange."
+				}
+			]
+		},
+		{
+			id: "6",
+			title: "The Last of Us",
+			year: 2023,
+			category: "Drame",
+			duration: "60m par épisode",
+			rating: "8.8",
+			description:
+				"Vingt ans après la destruction de la civilisation moderne, Joel, un survivant endurci, est engagé pour faire sortir Ellie, 14 ans, d'une zone de quarantaine oppressive.",
+			tags: ["Drame", "Post-apocalyptique", "Horreur"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg",
+			content_type: "series",
+			iframe_url: "https://www.youtube.com/embed/uLtkt8BonwM",
+			is_favorite: true,
+			episodes: [
+				{
+					name: "Épisode 1 : Quand on a perdu la partie",
+					url: "https://www.youtube.com/embed/uLtkt8BonwM",
+					description:
+						"Une épidémie dévaste la population mondiale et bouleverse la vie de Joel."
+				},
+				{
+					name: "Épisode 2 : Infecté",
+					url: "https://www.youtube.com/embed/2VjS0aHrIuE",
+					description:
+						"Joel et Tess font équipe avec une fille mystérieuse pour quitter la ville."
+				},
+				{
+					name: "Épisode 3 : Long, Long Time",
+					url: "https://www.youtube.com/embed/0n5xED3tJjs",
+					description:
+						"Joel et Ellie se rendent chez Bill et Frank pour trouver une voiture."
+				},
+				{
+					name: "Épisode 4 : Veuillez me tenir la main",
+					url: "https://www.youtube.com/embed/kJbW4kEc1MY",
+					description:
+						"Joel et Ellie traversent Kansas City et rencontrent des survivants."
+				}
+			]
+		},
+		{
+			id: "7",
+			title: "The Crown",
+			year: 2016,
+			category: "Drame",
+			duration: "55m par épisode",
+			rating: "8.6",
+			description:
+				"Suivez les rivalités politiques et les intrigues amoureuses du règne de la reine Elizabeth II.",
+			tags: ["Historique", "Drame", "Biopic"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/1M876KPjulVwppEpldhdc8V4o12.jpg",
+			content_type: "series",
+			iframe_url: "https://www.youtube.com/embed/JWtnJjn6ng0",
+			is_favorite: false,
+			episodes: [
+				{
+					name: "S01E01 : Wolferton Splash",
+					url: "https://www.youtube.com/embed/JWtnJjn6ng0",
+					description:
+						"Le roi George VI meurt, laissant sa fille Elizabeth assumer le trône."
+				},
+				{
+					name: "S01E02 : Hyde Park Corner",
+					url: "https://www.youtube.com/embed/example1",
+					description:
+						"La reine Elizabeth retourne à Londres après la mort de son père."
+				},
+				{
+					name: "S01E03 : Windsor",
+					url: "https://www.youtube.com/embed/example2",
+					description:
+						"La reine s'installe dans son nouveau rôle et ses nouvelles responsabilités."
+				}
+			]
+		}
+	],
+	// Films d'action
+	action: [
+		{
+			id: "8",
+			title: "John Wick 4",
+			year: 2023,
+			category: "Action",
+			duration: "2h49m",
+			rating: "7.8",
+			description:
+				"John Wick découvre un moyen de vaincre le Haut Conseil. Mais avant de pouvoir gagner sa liberté, il doit affronter un nouvel ennemi aux alliances puissantes.",
+			tags: ["Action", "Thriller", "Néo-noir"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/yjRHZEUamCc",
+			is_favorite: true,
+			episodes: []
+		},
+		{
+			id: "9",
+			title: "Mission: Impossible - Dead Reckoning Part One",
+			year: 2023,
+			category: "Action",
+			duration: "2h43m",
+			rating: "7.8",
+			description:
+				"Ethan Hunt et son équipe de l'IMF doivent retrouver une nouvelle arme terrifiante qui menace l'humanité entière.",
+			tags: ["Action", "Espionnage", "Aventure"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/avz06PDqDbM",
+			is_favorite: false,
+			episodes: []
+		},
+		{
+			id: "10",
+			title: "Top Gun: Maverick",
+			year: 2022,
+			category: "Action",
+			duration: "2h10m",
+			rating: "8.2",
+			description:
+				'Après plus de trente ans de service, Pete "Maverick" Mitchell est toujours là, repoussant les limites en tant que pilote d\'essai courageux.',
+			tags: ["Action", "Drame", "Aventure"],
+			cover_image:
+				"https://image.tmdb.org/t/p/original/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
+			content_type: "movie",
+			iframe_url: "https://www.youtube.com/embed/giXco2jaZ_4",
+			is_favorite: true,
+			episodes: []
+		}
+	]
+};
+// Tous les films pour le lecteur
+const allMovies = [
+	...demoMovies.popular,
+	...demoMovies.series,
+	...demoMovies.action
+];
+// Initialisation
+document.addEventListener("DOMContentLoaded", function () {
+	// Initialiser le movie player
+	moviePlayer = new MoviePlayer({
+		darkMode: true,
+		allMovies: allMovies,
+		onClose: () => console.log("Player fermé"),
+		onPlayMovie: (movie) => {
+			console.log("Lecture du film:", movie.title);
+			moviePlayer.show(movie);
+		},
+		onToggleFavorite: (id, isFavorite) => {
+			console.log(`Favori ${id}: ${isFavorite ? "ajouté" : "retiré"}`);
+			// Mettre à jour l'état dans les données
+			const movie = allMovies.find((m) => m.id === id);
+			if (movie) {
+				movie.is_favorite = isFavorite;
+			}
+		}
+	});
+	// Rendre les films disponibles globalement
+	window.demoMovies = demoMovies;
+	window.allMovies = allMovies;
+	// Afficher les films dans la grille
+	renderMovies();
+	// Exporter la fonction pour ouvrir le lecteur
+	window.openMoviePlayer = (movieData) => {
+		if (moviePlayer) {
+			moviePlayer.show(movieData);
+		}
+	};
+});
+// Fonction pour afficher les films
+function renderMovies() {
+	// Films populaires
+	const popularGrid = document.getElementById("popular-movies");
+	demoMovies.popular.forEach((movie) => {
+		popularGrid.innerHTML += createMovieCard(movie);
+	});
+	// Séries TV
+	const seriesGrid = document.getElementById("series-grid");
+	demoMovies.series.forEach((movie) => {
+		seriesGrid.innerHTML += createMovieCard(movie);
+	});
+	// Films d'action
+	const actionGrid = document.getElementById("action-movies");
+	demoMovies.action.forEach((movie) => {
+		actionGrid.innerHTML += createMovieCard(movie);
+	});
+	// Ajouter les écouteurs d'événements après le rendu
+	setTimeout(() => {
+		document.querySelectorAll(".movie-card").forEach((card) => {
+			card.addEventListener("click", function () {
+				const movieId = this.getAttribute("data-movie-id");
+				const movie = allMovies.find((m) => m.id === movieId);
+				if (movie) {
+					window.openMoviePlayer(movie);
+				}
+			});
+		});
+	}, 100);
+}
+// Créer une carte de film
+function createMovieCard(movie) {
+	return `
+                <div class="movie-card" data-movie-id="${movie.id}">
+                    <div class="movie-card-image" style="background-image: url('${
+																					movie.cover_image
+																				}')">
+                        <div class="movie-card-overlay">
+                            <button class="play-btn" onclick="event.stopPropagation(); window.openMoviePlayer(${JSON.stringify(
+																													movie
+																												).replace(/"/g, "&quot;")})">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="movie-card-content">
+                        <h3 class="movie-card-title">${movie.title}</h3>
+                        <div class="movie-card-meta">
+                            <span><i class="fas fa-calendar"></i> ${
+																													movie.year
+																												}</span>
+                            <span><i class="fas ${
+																													movie.content_type === "series"
+																														? "fa-tv"
+																														: "fa-film"
+																												}"></i> ${
+		movie.content_type === "series" ? "Série" : "Film"
+	}</span>
+                            <span><i class="fas fa-star"></i> ${
+																													movie.rating
+																												}</span>
+                        </div>
+                        <p class="movie-card-description">${
+																									movie.description
+																								}</p>
+                        <div class="movie-card-tags">
+                            ${movie.tags
+																													.slice(0, 2)
+																													.map(
+																														(tag) => `
+                                <span class="movie-card-tag">${tag}</span>
+                            `
+																													)
+																													.join("")}
+                        </div>
+                    </div>
+                </div>
+            `;
+}
+// Changer le thème
+function setTheme(theme) {
+	const darkBtn = document.querySelector(".theme-btn:nth-child(2)");
+	const lightBtn = document.querySelector(".theme-btn:nth-child(3)");
+	if (theme === "dark") {
+		document.body.className = "dark-mode";
+		darkBtn.classList.add("active");
+		lightBtn.classList.remove("active");
+		if (moviePlayer) moviePlayer.updateTheme(true);
+	} else {
+		document.body.className = "light-mode";
+		darkBtn.classList.remove("active");
+		lightBtn.classList.add("active");
+		if (moviePlayer) moviePlayer.updateTheme(false);
+	}
+}
+// Fonctions de démonstration pour la console
+window.demoFunctions = {
+	// Ouvrir un film spécifique
+	openMovie: function (movieId) {
+		const movie = allMovies.find((m) => m.id === movieId);
+		if (movie) {
+			window.openMoviePlayer(movie);
+		}
+	},
+	// Ouvrir le premier film
+	openFirstMovie: function () {
+		if (allMovies.length > 0) {
+			window.openMoviePlayer(allMovies[0]);
+		}
+	},
+	// Ouvrir la première série
+	openFirstSeries: function () {
+		const series = demoMovies.series[0];
+		if (series) {
+			window.openMoviePlayer(series);
+		}
+	},
+	// Afficher toutes les données
+	showAllMovies: function () {
+		console.log("Tous les films disponibles:", allMovies);
+		return allMovies;
+	},
+	// Tester l'autoplay
+	testAutoplay: function () {
+		const series = demoMovies.series[0];
+		if (series) {
+			window.openMoviePlayer(series);
+			console.log(
+				"Série ouverte avec autoplay. Le prochain épisode commencera dans 5 secondes."
+			);
+		}
+	}
+};
+// Afficher les commandes utiles dans la console
+console.log(
+	"%c🎬 Movie Player Demo",
+	"color: #e50914; font-size: 20px; font-weight: bold;"
+);
+console.log("%cCommandes disponibles:", "color: #00a8e1; font-weight: bold;");
+console.log('• demoFunctions.openMovie("1") - Ouvrir Dune');
+console.log("• demoFunctions.openFirstMovie() - Ouvrir le premier film");
+console.log("• demoFunctions.openFirstSeries() - Ouvrir la première série");
+console.log("• demoFunctions.testAutoplay() - Tester l'autoplay");
+console.log("• demoFunctions.showAllMovies() - Voir toutes les données");
+console.log(
+	"• window.openMoviePlayer(movieData) - Ouvrir un film personnalisé"
+);
